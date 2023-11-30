@@ -13,8 +13,10 @@ def catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
     >>> catalan_numbers(10)
     [1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796]
     """
-    if n == 0 or n == 1:
-        return 1
+    if n == 0:
+        return [1]
+    elif n == 1:
+        return [1, 1]
 
     if m != n:
         catalan_num = 0
