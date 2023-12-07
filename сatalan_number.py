@@ -1,5 +1,22 @@
-def integer_paths():
-    pass
+'''
+Catalan numbers
+'''
+def count_monotonic_paths(n:int)->int:
+    '''
+    Counts monotonic paths from (0,0) to (n,n)
+    >>> count_monotonic_paths(3)
+    20
+    >>> count_monotonic_paths(5)
+    252
+    '''
+    # Make a list of all coords
+
+    all_coords = [[1 if i ==0 or j ==0 else 0 for i in range (n+1)] for j in range(n+1) ]
+
+    for i in range(1,n+1):      #Simulate all possible ways to get to all tilles
+        for j in range(1,n+1):
+            all_coords[i][j] = all_coords[i-1][j] + all_coords[i][j-1]
+    return all_coords[-1][-1]       # Return the (n,n) ways
 
 def diagonals():
     pass
