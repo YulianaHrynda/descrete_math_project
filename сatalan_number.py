@@ -18,8 +18,39 @@ def count_monotonic_paths(n:int)->int:
             all_coords[i][j] = all_coords[i-1][j] + all_coords[i][j-1]
     return all_coords[-1][-1]       # Return the (n,n) ways
 
-def diagonals():
-    pass
+def diagonals(n):
+    '''
+    Returns the number of ways to draw n non-intersecting diagonals in 2n-gon
+    >>> diagonals(0)
+    0
+    >>> diagonals(1)
+    1
+    >>> diagonals(2)
+    0
+    >>> diagonals(3)
+    14
+    >>> diagonals(10)
+    58786
+    '''
+    match n:
+        case 0 | 2:
+            return 0
+        case 1:
+            return 1
+        case _:
+
+            if n < 0:
+                return 'ValueError: Wrong input'
+
+            n += 1
+            catalan = [1, 1] +[0 for _ in range(n + 1)]
+
+            for i in range(2, n + 1):
+                catalan[i] = 0
+                for j in range(i):
+                    catalan[i] += catalan[j] * catalan[i-j-1]
+
+            return catalan[n]
 
 def parenthesis_sequences(n: int) -> int:
     """
