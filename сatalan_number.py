@@ -76,4 +76,14 @@ def catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
         return nums
 
 def catalan_number_formula():
-    pass
+    if n <= 0:
+        return []
+
+    catalan_list = []
+    for i in range(n):
+        catalan = 1
+        for j in range(i):
+            catalan = catalan * (2 * (2 * j + 1)) // (j + 2)
+        catalan_list.append(catalan)
+
+    return catalan_list
