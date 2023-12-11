@@ -75,7 +75,7 @@ def catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
     else:
         return nums
 
-def catalan_number_formula():
+def catalan_number_formula(n):
     if n <= 0:
         return []
 
