@@ -1,6 +1,8 @@
 '''
 Catalan numbers
 '''
+import math
+
 def count_monotonic_paths(n:int)->int:
     '''
     Counts monotonic paths from (0,0) to (n,n)
@@ -150,15 +152,8 @@ def catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
     else:
         return nums
 
-def catalan_number_formula(n):
-    if n <= 0:
-        return []
-
-    catalan_list = []
-    for i in range(n):
-        catalan = 1
-        for j in range(i):
-            catalan = catalan * (2 * (2 * j + 1)) // (j + 2)
-        catalan_list.append(catalan)
-
-    return catalan_list
+def generate_catalan_sequence(count):
+    def catalan_number(n):
+        return math.factorial(2 * n) // (math.factorial(n + 1) * math.factorial(n))
+    catalan_sequence = [catalan_number(i) for i in range(count)]
+    return catalan_sequence
