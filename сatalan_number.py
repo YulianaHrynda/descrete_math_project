@@ -10,6 +10,8 @@ def count_monotonic_paths(n:int)->int:
     5
     >>> count_monotonic_paths(5)
     42
+    >>> count_monotonic_paths(9)
+    4862
     '''
     # Make a list of all coords
 
@@ -18,11 +20,11 @@ def count_monotonic_paths(n:int)->int:
     for i in range(1,n+1):      #Simulate all possible ways to get to all tilles
         for j in range(1,n+1):
     # If the point is below the diagonal, it has the sum of the paths from the left and above
-            if i > j:
+            if i < j:
                 all_coords[i][j] = all_coords[i-1][j] + all_coords[i][j-1]
     # If the point is on the diagonal, it has the same number of paths as the point to the left
             elif i == j:
-                all_coords[i][j] = all_coords[i][j-1]
+                all_coords[i][j] = all_coords[i-1][j]
     return all_coords[-1][-1]       # Return the (n,n) ways
 
 def diagonals(n):
