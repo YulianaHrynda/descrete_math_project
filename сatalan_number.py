@@ -57,6 +57,45 @@ def diagonals(n):
 
             return catalan[n]
 
+def simulate_diagonals(n):
+    '''
+    Returns the number of ways to draw n non-intersecting diagonals in 2n-gon
+    >>> simulate_diagonals(0)
+    0
+    >>> simulate_diagonals(1)
+    1
+    >>> simulate_diagonals(2)
+    0
+    >>> simulate_diagonals(3)
+    14
+    >>> simulate_diagonals(5)
+    132
+    '''
+    match n:
+        case 0 | 2:
+            return 0
+        case 1:
+            return 1
+        case _: # n >= 3
+            n += 1
+        
+            def is_valid(used):
+                for i in range(len(used)):
+                    for j in range(i+1, len(used)):
+                        if (min(used[i]) < min(used[j]) < max(used[i]) < max(used[j])) or (min(used[j]) < min(used[i]) < max(used[j]) < max(used[i])):
+                            return False
+                return True
+        
+            def count_diagonals(points, used):
+                if len(points) < 2:
+                    return is_valid(used)
+                total = 0
+                for i in range(1, len(points)):
+                    total += count_diagonals(points[i+1:] + points[1:i], used + [(points[0], points[i])])
+                return total
+        
+            return count_diagonals(list(range(2*n)), [])
+
 def parenthesis_sequences(n: int) -> int:
     """
     Returns the amount of possible parenthesis sequences
