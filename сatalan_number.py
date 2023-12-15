@@ -27,78 +27,28 @@ def count_monotonic_paths(n:int)->int:
                 all_coords[i][j] = all_coords[i-1][j]
     return all_coords[-1][-1]       # Return the (n,n) ways
 
-def diagonals(n):
+def count_triangulations(n):
     '''
-    Returns the number of ways to draw n non-intersecting diagonals in 2n-gon
-    >>> diagonals(0)
-    0
-    >>> diagonals(1)
+    Returns the number of different ways to triangulate a convex polygon with n vertices.
+    >>> count_triangulations(3)
     1
-    >>> diagonals(2)
-    0
-    >>> diagonals(3)
-    14
-    >>> diagonals(10)
-    58786
+    >>> count_triangulations(4)
+    2
+    >>> count_triangulations(5)
+    5
     '''
-    match n:
-        case 0 | 2:
-            return 0
-        case 1:
-            return 1
-        case _:
+    if n <= 2:
+        return 0
+    triangulations = [0] * (n + 1)
 
-            if n < 0:
-                return 'ValueError: Wrong input'
+    for i in range(4):
+        triangulations[i] = 1
 
-            n += 1
-            catalan = [1, 1] +[0 for _ in range(n + 1)]
+    for i in range(4, n + 1):
+        for j in range(2, i):
+            triangulations[i] += triangulations[j] * triangulations[i - j + 1]
 
-            for i in range(2, n + 1):
-                catalan[i] = 0
-                for j in range(i):
-                    catalan[i] += catalan[j] * catalan[i-j-1]
-
-            return catalan[n]
-
-def simulate_diagonals(n):
-    '''
-    Returns the number of ways to draw n non-intersecting diagonals in 2n-gon
-    >>> simulate_diagonals(0)
-    0
-    >>> simulate_diagonals(1)
-    1
-    >>> simulate_diagonals(2)
-    0
-    >>> simulate_diagonals(3)
-    14
-    >>> simulate_diagonals(5)
-    132
-    '''
-    match n:
-        case 0 | 2:
-            return 0
-        case 1:
-            return 1
-        case _: # n >= 3
-            n += 1
-        
-            def is_valid(used):
-                for i in range(len(used)):
-                    for j in range(i+1, len(used)):
-                        if (min(used[i]) < min(used[j]) < max(used[i]) < max(used[j])) or (min(used[j]) < min(used[i]) < max(used[j]) < max(used[i])):
-                            return False
-                return True
-        
-            def count_diagonals(points, used):
-                if len(points) < 2:
-                    return is_valid(used)
-                total = 0
-                for i in range(1, len(points)):
-                    total += count_diagonals(points[i+1:] + points[1:i], used + [(points[0], points[i])])
-                return total
-        
-            return count_diagonals(list(range(2*n)), [])
+    return triangulations[n]
 
 def parenthesis_sequences(n: int) -> int:
     """
