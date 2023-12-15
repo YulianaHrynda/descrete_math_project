@@ -62,7 +62,6 @@ def parenthesis_sequences(n: int) -> int:
         return 1
 
     output = 0
-    parenthesis = ''
 
     def parenthesis_generator(opening, closing):
         nonlocal output
