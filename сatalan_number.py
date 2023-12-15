@@ -58,26 +58,24 @@ def parenthesis_sequences(n: int) -> int:
     >>> parenthesis_sequences(4)
     14
     """
-    if not isinstance(n, int) or n < 0:
-        return "Wrong input: n has to be >= 0 Try again."
     if n == 0:
         return n
 
-    output = []
+    output = 0
     parenthesis = ''
-    length = 2*n
 
-    def parenthesis_generator(opening, closing, parenthesis, length, output):
-        if opening + closing == length:
-            output.append(parenthesis)
+    def parenthesis_generator(opening, closing):
+        nonlocal output
+        if opening + closing == 2*n:
+            output += 1
         else:
-            if opening < length/2:
-                parenthesis_generator(opening+1, closing, parenthesis + '(', length, output)
+            if opening < n*2/2:
+                parenthesis_generator(opening+1, closing)
             if closing < opening:
-                parenthesis_generator(opening, closing+1, parenthesis + ')', length, output)
+                parenthesis_generator(opening, closing+1)
 
-    parenthesis_generator(0, 0, parenthesis, length, output)
-    return len(output)
+    parenthesis_generator(0, 0)
+    return output
 
 def catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
     """
