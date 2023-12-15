@@ -59,7 +59,7 @@ def parenthesis_sequences(n: int) -> int:
     14
     """
     if n == 0:
-        return n
+        return 1
 
     output = 0
     parenthesis = ''
