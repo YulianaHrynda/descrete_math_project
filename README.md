@@ -1,1 +1,0 @@
-# descrete_math_project
