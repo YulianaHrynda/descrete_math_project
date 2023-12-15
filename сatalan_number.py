@@ -77,10 +77,10 @@ def parenthesis_sequences(n: int) -> int:
     parenthesis_generator(0, 0)
     return output
 
-def catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
+def recursive_catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
     """
     The function that finds the first n Catalan numbers using a recursive formula
-    >>> catalan_numbers(10)
+    >>> recursive_catalan_numbers(10)
     [1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862]
     """
     if n == 0:
@@ -94,7 +94,7 @@ def catalan_numbers(n: int, m: int = 1, nums: list = [1, 1]):
             catalan_num += nums[k] * nums[m - k]
         nums.append(catalan_num)
         m += 1
-        return catalan_numbers(n, m, nums)
+        return recursive_catalan_numbers(n, m, nums)
     else:
         return nums
 
